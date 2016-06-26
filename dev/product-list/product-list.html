@@ -1,0 +1,39 @@
+<div ng-controller="ProductListController">
+  <h1>hi</h1>
+  <div ng-repeat="item in test">
+    <p ng-bind="item"></p>
+  </div>
+</div>
+<!--<button class="btn btn-primary" ng-click="onSubmitClicked()">Review Order</button>
+<div class="product-list" *ngFor="let productCategory of productsArray" *ngIf="productCategory">
+  <h1>{{productCategory.name}}</h1>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-3" *ngFor="let product of productCategory.products">
+      <div class="card">
+        <img [src]="product.link" alt="" class="card-img-top">
+        <div class="card-block">
+          <p class="card-text">
+            {{product.name}}
+          </p>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group form-group" [ngClass]="{'has-danger': product.error, 'has-success': !product.error && isProductAddedToCart(product)}">
+                <input type="text" class="form-control" placeholder="How many" [(ngModel)]="product.amount" [ngClass]="{'form-control-danger': product.error, 'form-control-success': !product.error && isProductAddedToCart(product)}" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-xs-center">
+              <button type="button" class="btn btn-danger" ng-click="removeFromCart(product)" *ngIf="isProductAddedToCart(product)">
+                移除
+              </button>
+              <button type="button" class="btn btn-primary" ng-click="addToCart(product)" *ngIf="!isProductAddedToCart(product)">
+                訂購
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->

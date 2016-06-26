@@ -1,0 +1,26 @@
+.login-signup {
+  margin-top: 120px;
+  .login-form {
+    margin: 0 auto;
+  }
+
+  .login-alert {
+    margin: 0 auto;
+    margin-top: 12px;
+  }
+
+  .login-button {
+    margin-top: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-signup {
+    .login-form{
+      width: 35em;
+    }
+    .login-alert {
+      width: 35em;
+    }
+  }
+}
