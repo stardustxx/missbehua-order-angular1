@@ -12,56 +12,57 @@
 <body>
 
   <nav class="navbar navbar-dark navbar-full bg-inverse">
-    <a [routerLink]="['/home']" class="navbar-brand">
+    <a href='/home' class="navbar-brand">
     Home
   </a>
     <button class="navbar-toggler hidden-sm-up pull-xs-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
       &#9776;
     </button>
     <div class="collapse navbar-toggleable-xs" id="collapsingNavbar">
-      <ul class="nav navbar-nav pull-xs-right" *ngIf="isLoggedIn">
+      <ul class="nav navbar-nav pull-xs-right" ng-if="isLoggedIn">
         <li class="nav-item">
-          <a [routerLink]="['/products']" class="nav-link">Products</a>
+          <a href="/products" class="nav-link">Products</a>
         </li>
         <li class="nav-item">
-          <a [routerLink]="['/dashboard']" class="nav-link">Control Panel</a>
+          <a href="/dashboard" class="nav-link">Control Panel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-log-out" (click)="signOut()">Log out</a>
+          <a class="nav-link nav-log-out" ng-click="signOut()">Log out</a>
         </li>
       </ul>
     </div>
   </nav>
   <div class="container">
-    <router-outlet></router-outlet>
+    <div ng-view></div>
   </div>
 
+  <script src="lib/scripts/angular.min.js"></script>
+  <script src="lib/scripts/angular-route.min.js"></script>
+  <script src="lib/scripts/jquery.min.js"></script>
+  <script src="lib/scripts/firebase.js"></script>
+  <script src="lib/scripts/angularfire.min.js"></script>
+  <script src="lib/scripts/tether.min.js"></script>
+  <script src="lib/scripts/bootstrap.min.js"></script>
+  <script src="lib/scripts/Intl.min.js"></script>
+  <script src="lib/scripts/en.js"></script>
+  <script src="lib/scripts/zh.js"></script>
 
-  <ng-include src="'product-list/product-list.html'">
+  <script src="main.js"></script>
+  <script src="home/HomeController.js"></script>
+  <script src="product-list/ProductListController.js"></script>
+  <script src="cart/CartController.js"></script>
+  <script src="login-signup/LoginSignUpController.js"></script>
 
-    <script src="lib/scripts/angular.min.js"></script>
-    <script src="lib/scripts/jquery.min.js"></script>
-    <script src="lib/scripts/firebase.js"></script>
-    <script src="lib/scripts/angularfire.min.js"></script>
-    <script src="lib/scripts/tether.min.js"></script>
-    <script src="lib/scripts/bootstrap.min.js"></script>
-    <script src="lib/scripts/Intl.min.js"></script>
-    <script src="lib/scripts/en.js"></script>
-    <script src="lib/scripts/zh.js"></script>
-
-    <script src="main.js"></script>
-    <script src="product-list/ProductListController.js"></script>
-
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAtg9DN-9LGVviKZUPCoEaJdLDviEh0sP4",
-        authDomain: "missbehuafirebaseproject.firebaseapp.com",
-        databaseURL: "https://missbehuafirebaseproject.firebaseio.com",
-        storageBucket: "missbehuafirebaseproject.appspot.com",
-      };
-      firebase.initializeApp(config);
-    </script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAtg9DN-9LGVviKZUPCoEaJdLDviEh0sP4",
+      authDomain: "missbehuafirebaseproject.firebaseapp.com",
+      databaseURL: "https://missbehuafirebaseproject.firebaseio.com",
+      storageBucket: "missbehuafirebaseproject.appspot.com",
+    };
+    firebase.initializeApp(config);
+  </script>
 
 </body>
 

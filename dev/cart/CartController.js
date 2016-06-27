@@ -13,9 +13,7 @@
       $timeout(function(){
         currentUser = $window.firebase.auth().currentUser;
       });
-    }
 
-    ngAfterViewInit() {
       for (var prop in $rootScope.cartItems) {
         if ($rootScope.cartItems.hasOwnProperty(prop)) {
           var item = {
@@ -32,7 +30,7 @@
       });
     }
 
-    onSubmitOrderClicked() {
+    $scope.onSubmitOrderClicked = function() {
       $timeout(function(){
         var processedEmail = UtilityService.processEmail(currentUser.email);
         var newKey = $window.firebase.database().ref("order/admin").push().key;

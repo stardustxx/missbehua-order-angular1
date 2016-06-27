@@ -13,64 +13,68 @@ var del = require("del");
 gulp.task("build-dist", ["move-html", "move-dist-dep-js", "build-dist-dep-css", "move-view-css"]);
 gulp.task("build-dev", ["move-dev-dep-js", "build-dev-css"]);
 
-gulp.task("move-dev-dep-js", function(){
+gulp.task("move-dev-dep-js", function() {
   return gulp.src([
-    "./node_modules/angular/angular.min.js",
-    "./node_modules/jquery/dist/jquery.min.js",
-    "./node_modules/tether/dist/js/tether.min.js",
-    "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-    "./node_modules/intl/dist/Intl.min.js",
-    "./node_modules/intl/locale-data/jsonp/en.js",
-    "./node_modules/intl/locale-data/jsonp/zh.js",
-    "./node_modules/angularfire/dist/angularfire.min.js",
-    "./node_modules/firebase/firebase.js"
-  ])
-  .pipe(gulp.dest("./dev/lib/scripts/"));
+      "./node_modules/angular/angular.min.js",
+      "./node_modules/angular-route/angular-route.min.js",
+      "./node_modules/jquery/dist/jquery.min.js",
+      "./node_modules/tether/dist/js/tether.min.js",
+      "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "./node_modules/intl/dist/Intl.min.js",
+      "./node_modules/intl/locale-data/jsonp/en.js",
+      "./node_modules/intl/locale-data/jsonp/zh.js",
+      "./node_modules/angularfire/dist/angularfire.min.js",
+      "./node_modules/firebase/firebase.js"
+    ])
+    .pipe(gulp.dest("./dev/lib/scripts/"));
 });
 
-gulp.task("build-dev-css", function(){
+gulp.task("build-dev-css", function() {
   return gulp.src([
-    "./node_modules/tether/dist/css/tether.min.css",
-    "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-    "./node_modules/font-awesome/css/font-awesome.min.css"
-  ])
-  .pipe(concat("project.css"))
-  .pipe(gulp.dest("./dev/lib/stylesheets/"));
+      "./node_modules/tether/dist/css/tether.min.css",
+      "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "./node_modules/font-awesome/css/font-awesome.min.css"
+    ])
+    .pipe(concat("project.css"))
+    .pipe(gulp.dest("./dev/lib/stylesheets/"));
 });
 
-gulp.task("move-view-css", function(){
+gulp.task("move-view-css", function() {
   return gulp.src("./css/**/*")
     .pipe(gulp.dest("./dist/css/"));
 });
 
-gulp.task("move-html", function(){
+gulp.task("move-html", function() {
   return gulp.src("./app/**/*.html")
     .pipe(gulp.dest("./dist/app/"));
 });
 
-gulp.task("move-dist-dep-js", function(){
+gulp.task("move-dist-dep-js", function() {
   return gulp.src([
-    "./node_modules/jquery/dist/jquery.min.js",
-    "./node_modules/tether/dist/js/tether.min.js",
-    "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-    "./node_modules/intl/dist/Intl.min.js",
-    "./node_modules/intl/locale-data/jsonp/en.js",
-    "./node_modules/intl/locale-data/jsonp/zh.js",
-    "./node_modules/firebase/firebase.js"
-  ])
-  .pipe(gulp.dest("./dist/js/"));
+      "./node_modules/angular/angular.min.js",
+      "./node_modules/angular-route/angular-route.min.js",
+      "./node_modules/jquery/dist/jquery.min.js",
+      "./node_modules/tether/dist/js/tether.min.js",
+      "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+      "./node_modules/intl/dist/Intl.min.js",
+      "./node_modules/intl/locale-data/jsonp/en.js",
+      "./node_modules/intl/locale-data/jsonp/zh.js",
+      "./node_modules/angularfire/dist/angularfire.min.js",
+      "./node_modules/firebase/firebase.js"
+    ])
+    .pipe(gulp.dest("./dist/js/"));
 });
 
-gulp.task("build-dist-dep-css", function(){
+gulp.task("build-dist-dep-css", function() {
   return gulp.src([
-    "./node_modules/tether/dist/css/tether.min.css",
-    "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-    "./node_modules/font-awesome/css/font-awesome.min.css"
-  ])
-  .pipe(concat("project.css"))
-  .pipe(gulp.dest("./dist/css/"));
+      "./node_modules/tether/dist/css/tether.min.css",
+      "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "./node_modules/font-awesome/css/font-awesome.min.css"
+    ])
+    .pipe(concat("project.css"))
+    .pipe(gulp.dest("./dist/css/"));
 });
 
-gulp.task("del-prod", function(){
+gulp.task("del-prod", function() {
   del(["./production/"]);
 });

@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
-  app.controller("ProductListController", ["$scope", "$window", "$timeout", function($scope, $window, $timeout) {
+  app.controller("ProductListController", ["$scope", "$rootScope", "$window", "$timeout", function($scope, $rootScope, $window, $timeout) {
 
-    var productsArray = [];
-    var cartContent = {};
+    $scope.productsArray = [];
+    $rootScope.cartContent = {};
     var firebaseStorageRef;
     var productRef, productListener;
 
@@ -48,13 +48,12 @@
               }
             }
           }
-          this.productsArray.push(productJson);
+          $scope.productsArray.push(productJson);
         }
       }
     }
 
-    validateAmount(product: any) {
-      console.log(product);
+    function validateAmount(product) {
       if (isNaN(product.amount)) {
         product.error = true;
       } else {
@@ -62,28 +61,27 @@
       }
     }
 
-    addToCart(product: any) {
+    function addToCart(product) {
       if (product && product.amount) {
-        this.cartContent[product.name] = product.amount;
+        $rootScope.cartContent[product.name] = product.amount;
       }
     }
 
-    isProductAddedToCart(product: any) {
-      return this.cartContent.hasOwnProperty(product.name);
+    function isProductAddedToCart(product) {
+      return $rootScope.cartContent.hasOwnProperty(product.name);
     }
 
-    removeFromCart(product: any) {
-      if (this.isProductAddedToCart(product)) {
-        delete this.cartContent[product.name];
+    function removeFromCart(product) {
+      if (isProductAddedToCart(product)) {
+        delete $rootScope.cartContent[product.name];
         product.amount = null;
       } else {
         return null;
       }
     }
 
-    onSubmitClicked() {
-      CartHelperService.setCartItems(this.cartContent);
-      this.router.navigate(["/cart"]);
+    function onSubmitClicked() {
+      $location.path("/cart");
     }
 
     $scope.$on("$routeChangeStart", function(next, current){
