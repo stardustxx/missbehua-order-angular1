@@ -1,8 +1,7 @@
 (function() {
   "use strict";
 
-  app.controller("CartController", ["$scope", "$rootScope", "$timeout", "$location", "$window", function($scope, $rootScope, $timeout, $location, $window) {
-    $rootScope.cartItems = [];
+  app.controller("CartController", ["$scope", "$rootScope", "$timeout", "$location", "$window", "UtilityService", function($scope, $rootScope, $timeout, $location, $window, UtilityService) {
     $scope.cartItemsArray = [];
     $scope.itemTotal = 0;
     var currentUser = {};

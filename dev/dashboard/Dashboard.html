@@ -74,7 +74,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item of productArray">
+            <tr ng-repeat="item in productArray">
               <th scope="row"><span ng-bind="item.name"></span></th>
               <td><span ng-bind="item.category"></span></td>
               <td>
@@ -96,7 +96,7 @@
             <fieldset class="form-group" ng-if="!newCategory">
               <label for="fromProductCategory">類別</label>
               <select class="form-control" id="testSelect" [(ngModel)]="selectedCategory">
-                <option ng-repeat="item of categoryArray" [value]="item">{{item}}</option>
+                <option ng-repeat="item in categoryArray" [value]="item">{{item}}</option>
               </select>
             </fieldset>
             <fieldset class="form-group">
@@ -160,7 +160,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="user of userArray">
+            <tr ng-repeat="user in userArray">
               <th scope="row">{{user.email}}</th>
               <td>
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#delete-user-modal" ng-click="onDeleteUserClicked(user)" ng-if="user.account_type != 1">Delete</button>

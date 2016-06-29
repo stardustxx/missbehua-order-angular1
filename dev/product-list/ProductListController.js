@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
-  app.controller("ProductListController", ["$scope", "$rootScope", "$window", "$timeout", function($scope, $rootScope, $window, $timeout) {
+  app.controller("ProductListController", ["$scope", "$rootScope", "$window", "$timeout", "$location", function($scope, $rootScope, $window, $timeout, $location) {
 
     $scope.productsArray = [];
-    $rootScope.cartContent = {};
+    $rootScope.cartItems = {};
     var firebaseStorageRef;
     var productRef, productListener;
 
@@ -50,6 +50,7 @@
           }
           $scope.productsArray.push(productJson);
         }
+        $scope.$digest();
       }
     }
 
@@ -61,26 +62,26 @@
       }
     }
 
-    function addToCart(product) {
+    $scope.addToCart = function(product) {
       if (product && product.amount) {
-        $rootScope.cartContent[product.name] = product.amount;
+        $rootScope.cartItems[product.name] = product.amount;
       }
     }
 
-    function isProductAddedToCart(product) {
-      return $rootScope.cartContent.hasOwnProperty(product.name);
+    $scope.isProductAddedToCart = function(product) {
+      return $rootScope.cartItems.hasOwnProperty(product.name);
     }
 
-    function removeFromCart(product) {
-      if (isProductAddedToCart(product)) {
-        delete $rootScope.cartContent[product.name];
+    $scope.removeFromCart = function(product) {
+      if ($scope.isProductAddedToCart(product)) {
+        delete $rootScope.cartItems[product.name];
         product.amount = null;
       } else {
         return null;
       }
     }
 
-    function onSubmitClicked() {
+    $scope.onSubmitClicked = function() {
       $location.path("/cart");
     }
 

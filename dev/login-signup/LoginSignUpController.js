@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  app.controller("LoginSignUpController", ["$scope", "$rootScope", "$timeout", "$location", function($scope, $rootScope, $timeout, $location) {
+  app.controller("LoginSignUpController", ["$scope", "$rootScope", "$timeout", "$location", "$window", function($scope, $rootScope, $timeout, $location, $window) {
     $scope.userInfo = {
       "email": "",
       "password": ""

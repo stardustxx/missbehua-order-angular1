@@ -2,108 +2,111 @@
   "use strict";
 
   app.controller("DashboardController", ["$scope", "$rootScope", "$timeout", "$window", function($scope, $rootScope, $timeout, $window) {
-    database: any;
-    storage: any;
-    orderRef: any;
-    productRef: any;
-    userRef: any;
-    orderArray: Array < any > = [];
-    orderDetail: any = {}
-    productArray: Array < any > = [];
-    categoryArray: Array < string > = [];
-    userArray: Array < any > = [];
+    var database, storage;
+    var orderRef, productRef, userRef;
+    $scope.orderArray = [];
+    $scope.orderDetail = {}
+    $scope.productArray = [];
+    $scope.categoryArray = [];
+    $scope.userArray = [];
 
-    tabProductTitle: string = "Product Table";
+    $scope.tabProductTitle = "Product Table";
 
-    selectedProductToDelete: any = null;
+    var selectedProductToDelete = null;
 
-    isShowingOrderDetail: boolean = false;
+    $scope.isShowingOrderDetail = false;
 
-    isShowingProductTable: boolean = false;
-    isAddingNewProduct: boolean = false;
+    $scope.isShowingProductTable = false;
+    $scope.isAddingNewProduct = false;
 
-    isShowingUser: boolean = false;
-    selectedUserToDelete: any = null;
+    $scope.isShowingUser = false;
+    var selectedUserToDelete = null;
 
     // New Product Form
     $scope.newProduct = {
-      productName: "";
-      newCategory: "";
-      selectedCategory: "";
-      fileUpload: undefined;
+      productName: "",
+      newCategory: "",
+      selectedCategory: "",
+      fileUpload: undefined
     };
 
     // User
     $scope.user = {
-      newEmail: "";
+      newEmail: ""
     };
 
-    constructor() {
-      this.database = firebase.database();
-      this.storage = firebase.storage();
+    init();
+
+    function init() {
+      database = $window.firebase.database();
+      storage = $window.firebase.storage();
+
+      orderRef = database.ref("order/all");
+      productRef = database.ref("products");
+      userRef = database.ref("users");
+
+      getOrder();
+      getProduct();
+      getUser();
     }
 
-    ngOnInit() {
-      this.orderRef = this.database.ref("order/all");
-      this.productRef = this.database.ref("products");
-      this.userRef = this.database.ref("users");
-    }
-
-    ngAfterViewInit() {
-      this.getOrder();
-      this.getProduct();
-      this.getUser();
-    }
-
-    getOrder() {
-      this.orderRef.on("child_added", (data) => {
-        this.addDataInOrder(data);
+    function getOrder() {
+      $timeout(function(){
+        orderRef.on("child_added", function(data) {
+          addDataInOrder(data);
+        });
       });
     }
 
-    getProduct() {
-      this.productArray = [];
-      this.productRef.on("value", (snapshot) => {
-        this.formatProductArray(snapshot.val());
+    function getProduct() {
+      $scope.productArray = [];
+      $timeout(function() {
+        productRef.on("value", function(snapshot) {
+          formatProductArray(snapshot.val());
+        });
       });
     }
 
-    getUser() {
-      this.userRef.on("child_added", (data) => {
-        this.userArray.push(data.val());
+    function getUser() {
+      $timeout(function() {
+        userRef.on("child_added", function(data) {
+          $scope.userArray.push(data.val());
+          $scope.$digest();
+        });
       });
     }
 
-    addDataInOrder(order: any) {
+    function addDataInOrder(order) {
       var date = new Date(order.val().date);
-      this.orderArray.push({
+      $scope.orderArray.push({
         "email": order.val().email,
         "products": order.val().product,
         "total": order.val().total,
         "date": date
       });
+      $scope.$digest();
     }
 
-    onViewMoreClicked(item: any) {
-      this.orderDetail["email"] = item.email;
-      this.orderDetail["products"] = [];
-      this.orderDetail["total"] = item.total;
-      this.orderDetail["date"] = item.date;
+    $scope.onViewMoreClicked = function(item) {
+      $scope.orderDetail["email"] = item.email;
+      $scope.orderDetail["products"] = [];
+      $scope.orderDetail["total"] = item.total;
+      $scope.orderDetail["date"] = item.date;
       var products = item.products;
       for (var prop in products) {
         if (products.hasOwnProperty(prop)) {
-          this.orderDetail["products"].push({
+          $scope.orderDetail["products"].push({
             "name": prop,
             "amount": products[prop]
           });
         }
       }
-      this.isShowingOrderDetail = true;
+      $scope.isShowingOrderDetail = true;
     }
 
-    formatProductArray(result: any) {
+    function formatProductArray(result) {
       for (var category in result) {
-        this.categoryArray.push(category);
+        $scope.categoryArray.push(category);
         if (result.hasOwnProperty(category)) {
           var productsCategory = result[category];
           for (var key in productsCategory) {
@@ -111,121 +114,128 @@
               var product = productsCategory[key][obj];
               product["category"] = category;
               product["key"] = key;
-              this.productArray.push(product);
+              $scope.productArray.push(product);
             }
           }
         }
       }
+      $scope.$digest();
     }
 
-    onBackToOrderClicked() {
-      this.isShowingOrderDetail = false;
-      this.orderDetail = {};
+    $scope.onBackToOrderClicked = function() {
+      $scope.isShowingOrderDetail = false;
+      $scope.orderDetail = {};
     }
 
-    onProductTabClicked() {
-      this.isShowingProductTable = true;
+    $scope.onProductTabClicked = function() {
+      $scope.isShowingProductTable = true;
     }
 
-    onUserTabClicked() {
-      this.isShowingUser = true;
+    $scope.onUserTabClicked = function() {
+      $scope.isShowingUser = true;
     }
 
-    onBackInProductClicked() {
-      this.isAddingNewProduct = false;
-      this.tabProductTitle = "Product Table";
+    $scope.onBackInProductClicked = function() {
+      $scope.isAddingNewProduct = false;
+      $scope.tabProductTitle = "Product Table";
     }
 
-    onAddNewProductClicked() {
-      this.isAddingNewProduct = true;
-      this.tabProductTitle = "新增產品"
+    $scope.onAddNewProductClicked = function() {
+      $scope.isAddingNewProduct = true;
+      $scope.tabProductTitle = "新增產品"
     }
 
-    onToggleEnabledClicked(item: any) {
+    $scope.onToggleEnabledClicked = function(item) {
       item.enabled = !item.enabled;
       var obj = {
         "enabled": item.enabled,
         "image": item.image,
         "name": item.name
       };
-      this.productRef.child(item.category).child(item.key).child(item.name).set(obj);
+      productRef.child(item.category).child(item.key).child(item.name).set(obj);
     }
 
-    onDeleteProductClicked(item: any) {
-      this.selectedProductToDelete = item;
+    $scope.onDeleteProductClicked = function(item) {
+      selectedProductToDelete = item;
     }
 
-    confirmDeleteProduct() {
-      if (this.selectedProductToDelete) {
-        firebase.database().ref("products").child(this.selectedProductToDelete.category).child(this.selectedProductToDelete.key).set(null);
-        this.getProduct();
+    $scope.confirmDeleteProduct = function() {
+      if (selectedProductToDelete) {
+        firebase.database().ref("products").child(selectedProductToDelete.category).child(selectedProductToDelete.key).set(null);
+        getProduct();
       }
     }
 
-    resetNewCategory() {
-      this.newCategory = "";
+    $scope.resetNewCategory = function() {
+      $scope.newProduct.newCategory = "";
     }
 
-    onSubmitNewProductClicked() {
-      // Check File
-      var file = ( < HTMLInputElement > document.getElementById("inputImageFile")).files[0];
-      var category;
-      if (file) {
-        var fileRef;
-        if (this.newCategory) {
-          fileRef = this.storage.ref().child("products").child(this.newCategory + "/" + file.name);
-          category = this.newCategory;
-        } else if (this.selectedCategory) {
-          fileRef = this.storage.ref().child("products").child(this.selectedCategory + "/" + file.name);
-          category = this.selectedCategory;
-        } else {
-          return;
-        }
-
-        this.fileUpload = fileRef.put(file);
-
-        this.fileUpload.on("state_changed", (snapshot) => {
-
-        }, (error) => {
-          console.log(error);
-        }, () => {
-          var imageUrl = this.fileUpload.snapshot.downloadURL;
-          var obj = {
-            "name": this.productName,
-            "image": imageUrl,
-            "enabled": true
-          };
-          this.productRef.child(category).push().child(this.productName).set(obj);
-          this.productName = "";
-        });
-      }
-    }
-
-    onAddingEmailClicked() {
-      if (this.newEmail) {
-        var processedEmail = UtilityService.processEmail(this.newEmail);
-        this.userRef.child(processedEmail).on("value", (snapshot) => {
-          console.log("snap", snapshot.val());
-          if (snapshot.val() == null) {
-            firebase.database().ref("users/" + processedEmail).set({
-              "account_type": 2,
-              "email": this.newEmail,
-              "enabled": true
-            });
-            this.newEmail = "";
+    $scope.onSubmitNewProductClicked = function() {
+      $timeout(function() {
+        // Check File
+        var file = document.getElementById("inputImageFile").files[0];
+        var category;
+        if (file) {
+          var fileRef;
+          if ($scope.newProduct.newCategory) {
+            fileRef = storage.ref().child("products").child($scope.newProduct.newCategory + "/" + file.name);
+            category = $scope.newProduct.newCategory;
+          } else if ($scope.newProduct.selectedCategory) {
+            fileRef = storage.ref().child("products").child($scope.newProduct.selectedCategory + "/" + file.name);
+            category = $scope.newProduct.selectedCategory;
+          } else {
+            return;
           }
-        });
-      }
+
+          $scope.newProduct.fileUpload = fileRef.put(file);
+
+          $scope.newProduct.fileUpload.on("state_changed", function(snapshot) {
+            console.log("upload success");
+          }, function(error) {
+            console.log(error);
+          }, function() {
+            var imageUrl = $scope.newProduct.fileUpload.snapshot.downloadURL;
+            var obj = {
+              "name": $scope.newProduct.productName,
+              "image": imageUrl,
+              "enabled": true
+            };
+            productRef.child(category).push().child($scope.newProduct.productName).set(obj);
+            $scope.newProduct.productName = "";
+          });
+        }
+      });
     }
 
-    onDeleteUserClicked(user: any) {
-      this.selectedUserToDelete = user;
+    $scope.onAddingEmailClicked = function() {
+      $timeout(function() {
+        if ($scope.user.newEmail) {
+          var processedEmail = UtilityService.processEmail($scope.user.newEmail);
+          userRef.child(processedEmail).on("value", (snapshot) => {
+            console.log("snap", snapshot.val());
+            if (snapshot.val() == null) {
+              firebase.database().ref("users/" + processedEmail).set({
+                "account_type": 2,
+                "email": $scope.user.newEmail,
+                "enabled": true
+              });
+              $scope.user.newEmail = "";
+            }
+          });
+        }
+      });
     }
 
-    onConfirmDeleteUser() {
-      var processedEmail = UtilityService.processEmail(this.selectedUserToDelete.email);
-      this.userRef.child(processedEmail).set(null);
-      this.getUser();
+    $scope.onDeleteUserClicked = function(user) {
+      selectedUserToDelete = user;
+    }
+
+    $scope.onConfirmDeleteUser = function() {
+      var processedEmail = UtilityService.processEmail(selectedUserToDelete.email);
+      $timeout(function() {
+        userRef.child(processedEmail).set(null);
+        getUser();
+      });
     }
 
   }]);
