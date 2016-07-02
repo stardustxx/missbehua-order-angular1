@@ -4,10 +4,10 @@
       <a href="#order" data-toggle="tab" class="nav-link active" role="tab">訂單</a>
     </li>
     <li class="nav-item">
-      <a href="#product" data-toggle="tab" class="nav-link" role="tab" ng-click="onProductTabClicked()">產品</a>
+      <a href="#product" data-toggle="tab" class="nav-link" role="tab">產品</a>
     </li>
     <li class="nav-item">
-      <a href="#user" data-toggle="tab" class="nav-link" role="tab" ng-click="onUserTabClicked()">會員</a>
+      <a href="#user" data-toggle="tab" class="nav-link" role="tab">會員</a>
     </li>
   </ul>
   <div class="tab-content">
@@ -56,72 +56,70 @@
       </div>
     </div>
     <div class="tab-pane" id="product" role="tabpanel">
-      <div ng-if="isShowingProductTable">
-        <div class="row">
-          <div class="col-sm-6">
-            <h1 ng-bind="tabProductTitle"></h1>
-          </div>
-          <div class="col-sm-6">
-            <button class="btn btn-primary pull-xs-right" ng-click="onAddNewProductClicked()" ng-if="!isAddingNewProduct">Add</button>
-            <button class="btn btn-primary pull-xs-right" ng-click="onBackInProductClicked()" ng-if="isAddingNewProduct">返回</button>
-          </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h1 ng-bind="tabProductTitle"></h1>
         </div>
-        <table class="table table-inverse" ng-if="!isAddingNewProduct">
-          <thead>
-            <tr>
-              <th>代號</th>
-              <th>類別</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in productArray">
-              <th scope="row"><span ng-bind="item.name"></span></th>
-              <td><span ng-bind="item.category"></span></td>
-              <td>
-                <button class="btn btn-primary" ng-click="onToggleEnabledClicked(item)">
-                  <span ng-if="!item.enabled">Enable</span>
-                  <span ng-if="item.enabled">Disable</span>
-                </button>
-                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete-product-modal" ng-click="onDeleteProductClicked(item)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="product-add-new" ng-if="isAddingNewProduct">
-          <form>
-            <fieldset class="form-group">
-              <label for="formProductName">產品名稱</label>
-              <input type="text" class="form-control" [(ngModel)]="productName">
-            </fieldset>
-            <fieldset class="form-group" ng-if="!newCategory">
-              <label for="fromProductCategory">類別</label>
-              <select class="form-control" id="testSelect" [(ngModel)]="selectedCategory">
-                <option ng-repeat="item in categoryArray" [value]="item">{{item}}</option>
-              </select>
-            </fieldset>
-            <fieldset class="form-group">
-              <div class="row">
-                <div class="col-sm-8 input-new-category">
-                  <input type="text" name="category" value="" class="form-control" placeholder="增新類別" [(ngModel)]="newCategory">
-                </div>
-                <div class="col-sm-2">
-                  <button class="btn btn-secondary" ng-click="resetNewCategory()">Reset</button>
-                </div>
+        <div class="col-sm-6">
+          <button class="btn btn-primary pull-xs-right" ng-click="onAddNewProductClicked()" ng-if="!isAddingNewProduct">Add</button>
+          <button class="btn btn-primary pull-xs-right" ng-click="onBackInProductClicked()" ng-if="isAddingNewProduct">返回</button>
+        </div>
+      </div>
+      <table class="table table-inverse" ng-if="!isAddingNewProduct">
+        <thead>
+          <tr>
+            <th>代號</th>
+            <th>類別</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in productArray">
+            <th scope="row"><span ng-bind="item.name"></span></th>
+            <td><span ng-bind="item.category"></span></td>
+            <td>
+              <button class="btn btn-primary" ng-click="onToggleEnabledClicked(item)">
+                <span ng-if="!item.enabled">Enable</span>
+                <span ng-if="item.enabled">Disable</span>
+              </button>
+              <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#delete-product-modal" ng-click="onDeleteProductClicked(item)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="product-add-new" ng-if="isAddingNewProduct">
+        <form>
+          <fieldset class="form-group">
+            <label for="formProductName">產品名稱</label>
+            <input type="text" class="form-control" [(ngModel)]="productName">
+          </fieldset>
+          <fieldset class="form-group" ng-if="!newCategory">
+            <label for="fromProductCategory">類別</label>
+            <select class="form-control" id="testSelect" [(ngModel)]="selectedCategory">
+              <option ng-repeat="item in categoryArray" [value]="item">{{item}}</option>
+            </select>
+          </fieldset>
+          <fieldset class="form-group">
+            <div class="row">
+              <div class="col-sm-8 input-new-category">
+                <input type="text" name="category" value="" class="form-control" placeholder="增新類別" [(ngModel)]="newCategory">
               </div>
-            </fieldset>
-            <!-- <fieldset class="form-group">
+              <div class="col-sm-2">
+                <button class="btn btn-secondary" ng-click="resetNewCategory()">Reset</button>
+              </div>
+            </div>
+          </fieldset>
+          <!-- <fieldset class="form-group">
               <label class="file">
                 <input type="file" id="inputImageFile">
                 <span class="file-custom"></span>
               </label>
             </fieldset> -->
-            <fieldset class="form-group">
-              <label for="formProductFile">圖片上傳</label>
-              <input type="file" class="form-control-file" id="inputImageFile">
-            </fieldset>
-            <button type="submit" class="btn btn-primary" ng-click="onSubmitNewProductClicked()">Submit</button>
-          </form>
-        </div>
+          <fieldset class="form-group">
+            <label for="formProductFile">圖片上傳</label>
+            <input type="file" class="form-control-file" id="inputImageFile">
+          </fieldset>
+          <button type="submit" class="btn btn-primary" ng-click="onSubmitNewProductClicked()">Submit</button>
+        </form>
       </div>
       <div class="modal fade" id="delete-product-modal">
         <div class="modal-dialog" role="document">
@@ -144,46 +142,44 @@
       </div>
     </div>
     <div class="tab-pane" id="user" role="tabpanel">
-      <div ng-if="isShowingUser">
-        <h1>使用者</h1>
-        <form class="form-add-user">
-          <fieldset class="form-group">
-            <label for="email-input">Email</label>
-            <input type="email" class="form-control" placeholder="帳號" [(ngModel)]="newEmail">
-          </fieldset>
-          <button class="btn btn-primary add-email-button" ng-click="onAddingEmailClicked()">新增</button>
-        </form>
-        <table class="table table-inverse">
-          <thead>
-            <tr>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="user in userArray">
-              <th scope="row">{{user.email}}</th>
-              <td>
-                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#delete-user-modal" ng-click="onDeleteUserClicked(user)" ng-if="user.account_type != 1">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="modal fade" id="delete-user-modal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Delete User</h4>
-              </div>
-              <div class="modal-body">
-                確認移除該用戶嗎？
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="onConfirmDeleteUser()">Delete</button>
-              </div>
+      <h1>使用者</h1>
+      <form class="form-add-user">
+        <fieldset class="form-group">
+          <label for="email-input">Email</label>
+          <input type="email" class="form-control" placeholder="帳號" [(ngModel)]="newEmail">
+        </fieldset>
+        <button class="btn btn-primary add-email-button" ng-click="onAddingEmailClicked()">新增</button>
+      </form>
+      <table class="table table-inverse">
+        <thead>
+          <tr>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in userArray">
+            <th scope="row">{{user.email}}</th>
+            <td>
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#delete-user-modal" ng-click="onDeleteUserClicked(user)" ng-if="user.account_type != 1">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal fade" id="delete-user-modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Delete User</h4>
+            </div>
+            <div class="modal-body">
+              確認移除該用戶嗎？
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary" type="button" data-dismiss="modal" ng-click="onConfirmDeleteUser()">Delete</button>
             </div>
           </div>
         </div>

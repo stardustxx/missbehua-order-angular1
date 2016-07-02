@@ -7,10 +7,14 @@ var gulpSequence = require("gulp-sequence");
 var directoryMap = require("gulp-directory-map");
 var beautify = require("gulp-beautify");
 var concat = require("gulp-concat");
+var runSequence = require('run-sequence');
 var del = require("del");
 
 // gulp.task("build", gulpSequence("directoryMap"));
-gulp.task("build-dist", ["move-html", "move-dist-dep-js", "build-dist-dep-css", "move-view-css"]);
+// gulp.task("build-dist", ["move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css"]);
+gulp.task("build-dist", function(){
+  runSequence("move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css");
+});
 gulp.task("build-dev", ["move-dev-dep-js", "build-dev-css"]);
 
 gulp.task("move-dev-dep-js", function() {
@@ -40,13 +44,19 @@ gulp.task("build-dev-css", function() {
 });
 
 gulp.task("move-view-css", function() {
-  return gulp.src("./css/**/*")
-    .pipe(gulp.dest("./dist/css/"));
+  return gulp.src("./dev/main.css")
+    .pipe(gulp.dest("./public/"));
 });
 
 gulp.task("move-html", function() {
-  return gulp.src("./app/**/*.html")
-    .pipe(gulp.dest("./dist/app/"));
+  return gulp.src("./dev/**/*.html")
+    .pipe(gulp.dest("./public/"));
+});
+
+gulp.task("move-js", function(){
+  return gulp.src("./dev/**/*.js")
+    // .pipe(uglify())
+    .pipe(gulp.dest("./public/"));
 });
 
 gulp.task("move-dist-dep-js", function() {
@@ -62,7 +72,7 @@ gulp.task("move-dist-dep-js", function() {
       "./node_modules/angularfire/dist/angularfire.min.js",
       "./node_modules/firebase/firebase.js"
     ])
-    .pipe(gulp.dest("./dist/js/"));
+    .pipe(gulp.dest("./public/lib/scripts/"));
 });
 
 gulp.task("build-dist-dep-css", function() {
@@ -72,9 +82,9 @@ gulp.task("build-dist-dep-css", function() {
       "./node_modules/font-awesome/css/font-awesome.min.css"
     ])
     .pipe(concat("project.css"))
-    .pipe(gulp.dest("./dist/css/"));
+    .pipe(gulp.dest("./public/lib/stylesheets/"));
 });
 
-gulp.task("del-prod", function() {
-  del(["./production/"]);
+gulp.task("del-public", function() {
+  del(["./public/*"]);
 });

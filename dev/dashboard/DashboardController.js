@@ -16,10 +16,8 @@
 
     $scope.isShowingOrderDetail = false;
 
-    $scope.isShowingProductTable = false;
     $scope.isAddingNewProduct = false;
 
-    $scope.isShowingUser = false;
     var selectedUserToDelete = null;
 
     // New Product Form
@@ -48,6 +46,21 @@
       getOrder();
       getProduct();
       getUser();
+
+      $timeout(function(){
+        $(".nav-item a[href='#order']").click(function(event){
+          event.preventDefault();
+          $(".nav-item a[href='#order']").tab("show");
+        });
+        $(".nav-item a[href='#product']").click(function(event){
+          event.preventDefault();
+          $(".nav-item a[href='#product']").tab("show");
+        });
+        $(".nav-item a[href='#user']").click(function(event){
+          event.preventDefault();
+          $(".nav-item a[href='#user']").tab("show");
+        });
+      });
     }
 
     function getOrder() {
@@ -125,14 +138,6 @@
     $scope.onBackToOrderClicked = function() {
       $scope.isShowingOrderDetail = false;
       $scope.orderDetail = {};
-    }
-
-    $scope.onProductTabClicked = function() {
-      $scope.isShowingProductTable = true;
-    }
-
-    $scope.onUserTabClicked = function() {
-      $scope.isShowingUser = true;
     }
 
     $scope.onBackInProductClicked = function() {

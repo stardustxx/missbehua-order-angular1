@@ -14,8 +14,9 @@
 
   });
 
-  app.config(["$locationProvider", "$routeProvider", "$controllerProvider", function($locationProvider, $routeProvider, $controllerProvider) {
+  app.config(["$locationProvider", "$routeProvider", "$controllerProvider", "$compileProvider", function($locationProvider, $routeProvider, $controllerProvider, $compileProvider) {
     $controllerProvider.allowGlobals();
+    $compileProvider.debugInfoEnabled(false);
     // $locationProvider.hashPrefix("!");
     $locationProvider.html5Mode(true);
 
