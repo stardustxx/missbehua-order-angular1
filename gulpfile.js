@@ -13,7 +13,7 @@ var del = require("del");
 // gulp.task("build", gulpSequence("directoryMap"));
 // gulp.task("build-dist", ["move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css"]);
 gulp.task("build-dist", function(){
-  runSequence("move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css");
+  runSequence("del-public", "move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css");
 });
 gulp.task("build-dev", ["move-dev-dep-js", "build-dev-css"]);
 
