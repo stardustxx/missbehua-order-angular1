@@ -17,7 +17,7 @@
           <thead>
             <tr>
               <th>Email</th>
-              <th>數量</th>
+              <!-- <th>數量</th> -->
               <th>日期</th>
               <th>動作</th>
             </tr>
@@ -25,7 +25,7 @@
           <tbody>
             <tr ng-repeat="item in orderArray | orderBy: '-date'">
               <th scope="row"><span ng-bind="item.email"></span></th>
-              <td><span ng-bind="item.total"></span></td>
+              <!-- <td><span ng-bind="item.total"></span></td> -->
               <td>{{item.date | date}}</td>
               <td>
                 <button class="btn btn-primary" ng-click="onViewMoreClicked(item)">查看</button>
