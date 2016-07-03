@@ -1,0 +1,39 @@
+<div class="order" ng-if="!isShowingOrderDetail">
+  <table class="table table-inverse">
+    <thead>
+      <tr>
+        <th>數量</th>
+        <th>日期</th>
+        <th>動作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in orderArray | orderBy: '-date'">
+        <td><span ng-bind="item.total"></span></td>
+        <td>{{item.date | date}}</td>
+        <td>
+          <button class="btn btn-primary" ng-click="onViewMoreClicked(item)">查看</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="order-detail" ng-if="isShowingOrderDetail">
+  <button class="btn btn-primary" ng-click="onBackToOrderClicked()">Back</button>
+  <h3>總數：<span ng-bind="orderDetail.total"></span></h3>
+  <h3>日期：{{orderDetail.date | date}}</h3>
+  <table class="table table-inverse">
+    <thead>
+      <tr>
+        <th>產品</th>
+        <th>數量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in orderDetail.products">
+        <th scope="row"><span ng-bind="item.name"></span></th>
+        <td><span ng-bind="item.amount"></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
