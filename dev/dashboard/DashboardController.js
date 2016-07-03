@@ -119,6 +119,7 @@
     }
 
     function formatProductArray(result) {
+      $scope.categoryArray = [];
       for (var category in result) {
         var categoryObj = {};
         categoryObj.name = category;
