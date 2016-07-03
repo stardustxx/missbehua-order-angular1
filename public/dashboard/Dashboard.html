@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item in orderArray">
+            <tr ng-repeat="item in orderArray | orderBy: '-date'">
               <th scope="row"><span ng-bind="item.email"></span></th>
               <td><span ng-bind="item.total"></span></td>
               <td>{{item.date | date}}</td>
@@ -94,9 +94,7 @@
           </fieldset>
           <fieldset class="form-group" ng-if="!newProduct.newCategory">
             <label for="fromProductCategory">類別</label>
-            <select class="form-control" id="category-select" ng-model="newProduct.selectedCategory" ng-options="item.name for item in categoryArray">
-              <!-- <option ng-repeat="item in categoryArray track by $index" ng-value="item" ng-bind="item"></option> -->
-            </select>
+            <select class="form-control" id="category-select" ng-model="newProduct.selectedCategory" ng-options="item.name for item in categoryArray"></select>
           </fieldset>
           <fieldset class="form-group">
             <div class="row">
