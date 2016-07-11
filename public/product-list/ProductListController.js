@@ -36,10 +36,12 @@ app.controller("ProductListController", ["$scope", "$rootScope", "$window", "$ti
                   "name": "",
                   "amount": null,
                   "link": "",
+                  "path": "",
                   "error": false
                 };
                 singleProduct.name = product.name;
                 singleProduct.link = product.image;
+                singleProduct.path = "products/" + prop + "/" + product.name + ".jpg";
                 productJson.products.push(singleProduct);
               }
             }

@@ -11,6 +11,25 @@ app.service("UtilityService", function() {
 
 });
 
+app.directive("productImage", ["$timeout", "$window", function($timeout, $window){
+  return {
+    scope: {
+      imagepath: "@"
+    },
+    template:`<img ng-if="imagelink" ng-src="{{imagelink}}" alt="" class="card-img-top">`,
+    link: function(scope, element, attrs) {
+      $timeout(function(){
+        $window.firebase.storage().ref(scope.imagepath).getDownloadURL().then(function(url){
+          scope.imagelink = url;
+          scope.$digest();
+        }, function(failed){
+          console.log("Image URL failed", failed);
+        });
+      });
+    }
+  }
+}]);
+
 app.config(["$locationProvider", "$routeProvider", "$controllerProvider", "$compileProvider", function($locationProvider, $routeProvider, $controllerProvider, $compileProvider) {
   $controllerProvider.allowGlobals();
   $compileProvider.debugInfoEnabled(false);
