@@ -86,8 +86,8 @@ gulp.task("build-dist-dep-css", function() {
 });
 
 gulp.task("copy-image", function(){
-  return gulp.src("./dev/image")
-    .pipe(gulp.dest("./public/image"));
+  return gulp.src("./dev/image/**/*")
+    .pipe(gulp.dest("./public/image/"));
 });
 
 gulp.task("del-public", function() {
