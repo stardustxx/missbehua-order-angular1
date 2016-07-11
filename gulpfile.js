@@ -13,7 +13,7 @@ var del = require("del");
 // gulp.task("build", gulpSequence("directoryMap"));
 // gulp.task("build-dist", ["move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css"]);
 gulp.task("build-dist", function(){
-  runSequence("del-public", "move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css");
+  runSequence("del-public", "move-html", "move-js", "move-dist-dep-js", "build-dist-dep-css", "move-view-css", "copy-image");
 });
 gulp.task("build-dev", ["move-dev-dep-js", "build-dev-css"]);
 
@@ -83,6 +83,11 @@ gulp.task("build-dist-dep-css", function() {
     ])
     .pipe(concat("project.css"))
     .pipe(gulp.dest("./public/lib/stylesheets/"));
+});
+
+gulp.task("copy-image", function(){
+  return gulp.src("./dev/image")
+    .pipe(gulp.dest("./public/image"));
 });
 
 gulp.task("del-public", function() {
